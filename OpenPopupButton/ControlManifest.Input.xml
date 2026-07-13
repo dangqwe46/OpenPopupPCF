@@ -18,7 +18,7 @@
     <property name="DialogTitle" display-name-key="DialogTitle_Display" description-key="Dialog title text." of-type="SingleLine.Text" usage="input" required="false" />
     <property name="DialogWidth" display-name-key="DialogWidth_Display" description-key="Dialog width value." of-type="Whole.None" usage="input" required="false" />
     <property name="DialogHeight" display-name-key="DialogHeight_Display" description-key="Dialog height value." of-type="Whole.None" usage="input" required="false" />
-    <property name="SizeUnit" display-name-key="SizeUnit_Display" description-key="Size unit: '%' or 'px' (default '%')." of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="SizeUnit" display-name-key="SizeUnit_Display" description-key="Size unit: percent or px (default percent)." of-type="SingleLine.Text" usage="input" required="false" />
     <property name="Position" display-name-key="Position_Display" description-key="Dialog position: 1 = center, 2 = side (default 1)." of-type="Whole.None" usage="input" required="false" />
 
     <!-- INPUT: arbitrary extra params passed to the popup as a JSON object string (read via Param() on the custom page) -->
