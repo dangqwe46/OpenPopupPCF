@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest>
+  <control namespace="OpenPopup" constructor="OpenPopupButton" version="0.0.1" display-name-key="OpenPopupButton" description-key="Opens a custom page as a popup dialog via navigateTo. All parameters are dynamic." control-type="virtual" >
+    <external-service-usage enabled="false">
+    </external-service-usage>
+
+    <!-- OUTPUT: single string set when the popup closes (JSON-capable; acts as a close signal). This is the one required bound property. -->
+    <property name="ReturnData" display-name-key="ReturnData_Display" description-key="Value set when the popup closes. Bind to a variable to react to close." of-type="SingleLine.Text" usage="bound" required="true" />
+
+    <!-- INPUT: target popup custom page logical name (required) -->
+    <property name="TargetPageName" display-name-key="TargetPageName_Display" description-key="Logical name of the custom page to open as a popup." of-type="SingleLine.Text" usage="input" required="true" />
+
+    <!-- INPUT: record context passed to the popup (optional) -->
+    <property name="EntityName" display-name-key="EntityName_Display" description-key="entityName passed to the popup (optional)." of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="RecordId" display-name-key="RecordId_Display" description-key="recordId passed to the popup (optional)." of-type="SingleLine.Text" usage="input" required="false" />
+
+    <!-- INPUT: dialog appearance -->
+    <property name="DialogTitle" display-name-key="DialogTitle_Display" description-key="Dialog title text." of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="DialogWidth" display-name-key="DialogWidth_Display" description-key="Dialog width value." of-type="Whole.None" usage="input" required="false" />
+    <property name="DialogHeight" display-name-key="DialogHeight_Display" description-key="Dialog height value." of-type="Whole.None" usage="input" required="false" />
+    <property name="SizeUnit" display-name-key="SizeUnit_Display" description-key="Size unit: '%' or 'px' (default '%')." of-type="SingleLine.Text" usage="input" required="false" />
+    <property name="Position" display-name-key="Position_Display" description-key="Dialog position: 1 = center, 2 = side (default 1)." of-type="Whole.None" usage="input" required="false" />
+
+    <!-- INPUT: arbitrary extra params passed to the popup as a JSON object string (read via Param() on the custom page) -->
+    <property name="CustomParams" display-name-key="CustomParams_Display" description-key="JSON object string of extra parameters passed to the popup (read via Param())." of-type="Multiple" usage="input" required="false" />
+
+    <!-- INPUT: button caption -->
+    <property name="ButtonLabel" display-name-key="ButtonLabel_Display" description-key="Text shown on the button." of-type="SingleLine.Text" usage="input" required="false" />
+
+    <!-- INPUT: localStorage key the output is written to on popup close (default 'OpenPopupButton.ReturnData') -->
+    <property name="StorageKey" display-name-key="StorageKey_Display" description-key="localStorage key the popup output is saved under when the dialog closes." of-type="SingleLine.Text" usage="input" required="false" />
+
+    <resources>
+      <code path="index.ts" order="1"/>
+      <platform-library name="React" version="16.14.0" />
+      <platform-library name="Fluent" version="9.46.2" />
+    </resources>
+  </control>
+</manifest>
