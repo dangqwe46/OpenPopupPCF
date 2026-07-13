@@ -29,17 +29,61 @@ type NavigateToFn = (
     navigationOptions?: Record<string, unknown>
 ) => Promise<unknown>;
 
+interface XrmLike {
+    Navigation?: { navigateTo?: NavigateToFn };
+}
+
+/**
+ * Walk from the top-most window down to the current one and return the first
+ * accessible `Xrm.Navigation.navigateTo`. Using the TOP-MOST app window is what
+ * makes the dialog center on the whole model-driven app instead of the side pane
+ * / custom page that hosts this control (that host runs in a nested iframe, so its
+ * own Xrm centers the dialog within the pane).
+ */
+function findWindowNavigateTo(): NavigateToFn | undefined {
+    const wins: Window[] = [];
+    try {
+        if (window.top && window.top !== window) {
+            wins.push(window.top);
+        }
+    } catch {
+        // Cross-origin top window — not accessible, skip.
+    }
+    try {
+        if (window.parent && window.parent !== window) {
+            wins.push(window.parent);
+        }
+    } catch {
+        // Cross-origin parent — skip.
+    }
+    wins.push(window);
+
+    for (const w of wins) {
+        try {
+            const nav = (w as unknown as { Xrm?: XrmLike }).Xrm?.Navigation;
+            if (nav && typeof nav.navigateTo === "function") {
+                return nav.navigateTo.bind(nav);
+            }
+        } catch {
+            // Inaccessible window — skip.
+        }
+    }
+    return undefined;
+}
+
 function resolveNavigateTo(
     context: ComponentFramework.Context<unknown>
 ): NavigateToFn | undefined {
+    // Prefer the top-most app window so the popup centers on the model-driven app,
+    // not the hosting side pane / custom page.
+    const fromWindow = findWindowNavigateTo();
+    if (fromWindow) {
+        return fromWindow;
+    }
+    // Last resort: the control's own (pane-scoped) navigation context.
     const ctxNav = (context as unknown as { navigation?: { navigateTo?: NavigateToFn } }).navigation;
     if (ctxNav && typeof ctxNav.navigateTo === "function") {
         return ctxNav.navigateTo.bind(ctxNav);
-    }
-    const xrmNav = (window as unknown as { Xrm?: { Navigation?: { navigateTo?: NavigateToFn } } })
-        .Xrm?.Navigation;
-    if (xrmNav && typeof xrmNav.navigateTo === "function") {
-        return xrmNav.navigateTo.bind(xrmNav);
     }
     return undefined;
 }

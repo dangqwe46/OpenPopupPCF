@@ -17,8 +17,8 @@ Grab a prebuilt solution from **[`/dist`](./dist)**:
 
 | File | Use it when |
 |---|---|
-| [`OpenPopupButton_1_0_0_unmanaged.zip`](./dist/OpenPopupButton_1_0_0_unmanaged.zip) | Importing into a **dev** environment (you can edit/extend). **Most people want this.** |
-| [`OpenPopupButton_1_0_0_managed.zip`](./dist/OpenPopupButton_1_0_0_managed.zip) | Deploying to **test/prod** as a locked, managed solution. |
+| [`OpenPopupButton_1_0_1_unmanaged.zip`](./dist/OpenPopupButton_1_0_1_unmanaged.zip) | Importing into a **dev** environment (you can edit/extend). **Most people want this.** |
+| [`OpenPopupButton_1_0_1_managed.zip`](./dist/OpenPopupButton_1_0_1_managed.zip) | Deploying to **test/prod** as a locked, managed solution. |
 
 > On GitHub, open the file and click **Download raw** (or use the ⬇ button).
 
@@ -67,7 +67,7 @@ Select the control and set its properties (all are bindable Power Fx):
 | `DialogWidth` | Whole | | — | `40` |
 | `DialogHeight` | Whole | | — | `60` |
 | `SizeUnit` | Text | | `"%"` | `"%"` or `"px"` |
-| `Position` | Whole | | `1` | `1` = center, `2` = side |
+| `Position` | Whole | | `1` | `1` = center of the model-driven app, `2` = side pane |
 | `EntityName` | Text | | — | `"account"` |
 | `RecordId` | Text | | — | `First(Accounts).Account` |
 | `CustomParams` | Multiline Text | | — | `"{""orderId"":""123"",""mode"":""edit""}"` |
@@ -126,6 +126,10 @@ dist/                                  prebuilt downloadable solution zips
 ---
 
 ## 6. Troubleshooting
+- **Popup centers inside a side pane instead of the whole app:** fixed in v1.0.1. When this control is
+  hosted in a custom page opened as a **right/side pane**, it now calls `navigateTo` on the **top-most app
+  window** so `Position = 1` centers on the model-driven app, not the pane. Re-import the v1.0.1 solution and
+  **Publish all**.
 - **Button opens nothing in the harness:** expected — `navigateTo` only exists in a real model-driven
   runtime. The harness logs `[OpenPopupButton] navigateTo is unavailable`.
 - **`TargetPageName` wrong:** the popup won't open. Use the page's **logical/unique name**, not its display name.

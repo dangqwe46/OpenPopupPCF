@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="OpenPopup" constructor="OpenPopupButton" version="0.0.1" display-name-key="OpenPopupButton" description-key="Opens a custom page as a popup dialog via navigateTo. All parameters are dynamic." control-type="virtual" >
+  <control namespace="OpenPopup" constructor="OpenPopupButton" version="0.0.2" display-name-key="OpenPopupButton" description-key="Opens a custom page as a popup dialog via navigateTo. All parameters are dynamic." control-type="virtual" >
     <external-service-usage enabled="false">
     </external-service-usage>
 
